@@ -7,6 +7,13 @@ const { createServer } = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
 
+const authRoutes = require('./routes/auth');
+const companiesRoutes = require('./routes/companies');
+const membersRoutes = require('./routes/members');
+const visitorsRoutes = require('./routes/visitors');
+const requestsRoutes = require('./routes/requests');
+const adminRoutes = require('./routes/admin');
+
 const app = express();
 const server = createServer(app);
 // Allowed origins for CORS (UI hosts)
@@ -60,12 +67,12 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // app.use('/api/', limiter);
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/companies', require('./routes/companies'));
-app.use('/api/members', require('./routes/members'));
-app.use('/api/visitors', require('./routes/visitors'));
-app.use('/api/requests', require('./routes/requests'));
-app.use('/api/admin', require('./routes/admin'));
+app.use('/api/auth', authRoutes);
+app.use('/api/companies', companiesRoutes);
+app.use('/api/members', membersRoutes);
+app.use('/api/visitors', visitorsRoutes);
+app.use('/api/requests', requestsRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 
