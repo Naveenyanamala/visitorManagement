@@ -42,19 +42,19 @@ const io = new Server(server, {
 // If a proxy (like CRA dev server/nginx) sets X-Forwarded-For, trust it so rate-limit can read the real IP
 app.set('trust proxy', 1);
 app.use(helmet());
-const corsOptions = {
-  origin: function(origin, callback) {
-    // allow REST tools/no-origin requests
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true,
-  methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
-  allowedHeaders: ['Content-Type','Authorization']
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+// const corsOptions = {
+//   origin: function(origin, callback) {
+//     // allow REST tools/no-origin requests
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.includes(origin)) return callback(null, true);
+//     return callback(new Error('Not allowed by CORS'));
+//   },
+//   credentials: true,
+//   methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
+//   allowedHeaders: ['Content-Type','Authorization']
+// };
+app.use(cors());
+app.options('*', cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
