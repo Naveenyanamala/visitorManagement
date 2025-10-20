@@ -118,7 +118,7 @@ async function connectDB() {
 
 app.use(async (req, res, next) => {
  if (!isConnected) {
-  await connectDB();
+  connectDB();
  }
  next();
 });
