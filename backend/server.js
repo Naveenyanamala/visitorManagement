@@ -15,7 +15,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:3000',
   // keep API host harmlessly; origin is usually the UI host (3000)
-  'http://localhost:8090'
+  'http://localhost:8090',
+  "https://visitor-management-system.vercel.app"
 ];
 
 const io = new Server(server, {
