@@ -100,33 +100,47 @@ app.use('*', (req, res) => {
 //   process.exit(1);
 // });
 
-let isConnected = false;
-async function connectDB() {
-  if (isConnected) return;
-  try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/visitor_management', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    isConnected = true;
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    process.exit(1);
-  }
+
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-app.use(async (req, res, next) => {
- if (!isConnected) {
-  connectDB();
- }
- next();
-});
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
+  }
 
-// const PORT = process.env.PORT || 5000;
+  if (!cached.promise) {
+    const opts = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    };
+    cached.promise = mongoose.connect(process.env.MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+connectDB();
+console.log('Connected to MongoDB');
+
+// console.log('Connecting to MongoDB');
+// app.use((req, res, next) => {
+//   console.log('Connecting to MongoDB');
+ 
+//   connectDB();
+//   console.log('Connecting to MongoDB');
+
+//  next();
 // });
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 module.exports = app;
