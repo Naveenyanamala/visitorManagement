@@ -124,4 +124,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/visitor_m
 //   console.log(`Server running on port ${PORT}`);
 // });
 
-module.exports = { app, io };
+module.exports= {
+  app
+}
