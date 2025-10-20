@@ -31,20 +31,11 @@ function createApp() {
   const allowedOrigins = [
     process.env.CLIENT_URL || 'http://localhost:3000',
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'https://visitor-management-drob.vercel.app'
   ];
-  const corsOptions = {
-    origin(origin, cb) {
-      if (!origin) return cb(null, true);
-      if (allowedOrigins.includes(origin)) return cb(null, true);
-      return cb(new Error('Not allowed by CORS'));
-    },
-    credentials: true,
-    methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
-    allowedHeaders: ['Content-Type','Authorization']
-  };
-  app.use(cors(corsOptions));
-  app.options('*', cors(corsOptions));
+  app.use(cors());
+  app.options('*', cors());
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
