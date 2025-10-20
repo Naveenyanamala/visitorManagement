@@ -85,7 +85,7 @@ A comprehensive visitor management system built with the MERN stack (MongoDB, Ex
 
 4. **Access the application**
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
+   - Backend API: http://localhost:8090
    - MongoDB: localhost:27017
 
 ### Option 2: Local Development
@@ -126,7 +126,7 @@ A comprehensive visitor management system built with the MERN stack (MongoDB, Ex
 #### Backend (.env)
 ```env
 NODE_ENV=development
-PORT=5000
+PORT=8090
 MONGODB_URI=mongodb://localhost:27017/visitor_management
 
 # JWT Configuration
@@ -155,8 +155,8 @@ CLIENT_URL=http://localhost:3000
 
 #### Frontend (.env)
 ```env
-REACT_APP_API_URL=http://localhost:5000/api
-REACT_APP_SOCKET_URL=http://localhost:5000
+REACT_APP_API_URL=http://localhost:8090/api
+REACT_APP_SOCKET_URL=http://localhost:8090
 ```
 
 ### Service Configuration
